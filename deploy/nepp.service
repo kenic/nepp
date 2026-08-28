@@ -1,0 +1,45 @@
+[Unit]
+Description=Network Earth Position Protocol server
+Documentation=https://github.com/kenic/nepp
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+DynamicUser=yes
+StateDirectory=nepp
+CacheDirectory=nepp
+WorkingDirectory=/opt/nepp
+Environment=HOME=/var/lib/nepp
+Environment=PYTHONUNBUFFERED=1
+Environment=NEPP_HOST=::
+Environment=NEPP_PORT=56377
+Environment=NEPP_REFRESH=300
+EnvironmentFile=-/etc/nepp/nepp.env
+ExecStart=/opt/nepp/venv/bin/nepp-server --host ${NEPP_HOST} --port ${NEPP_PORT} --refresh ${NEPP_REFRESH} --log-level INFO
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=10s
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictSUIDSGID=yes
+RestrictRealtime=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+LimitNOFILE=1024
+MemoryMax=768M
+
+[Install]
+WantedBy=multi-user.target

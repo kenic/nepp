@@ -31,6 +31,13 @@ class ProtocolTests(unittest.TestCase):
         self.assertEqual(response.origin, sent)
         self.assertEqual(response.mode, Mode.SERVER)
 
+    def test_server_reports_clock_refresh_failure_as_holdover(self):
+        clock = SequenceClock([EarthDate.from_decimal("2026.2"),
+                               EarthDate.from_decimal("2026.3")])
+        clock.last_error = RuntimeError("ephemeris unavailable")
+        response = make_response(Packet(mode=Mode.CLIENT), clock)
+        self.assertEqual(response.status, Status.HOLDOVER)
+
     def test_offset_and_delay(self):
         e1 = EarthDate.from_decimal("2026.100")
         response = Packet(status=Status.SYNCHRONIZED, mode=Mode.SERVER, stratum=1,
