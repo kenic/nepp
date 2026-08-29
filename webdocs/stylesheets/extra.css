@@ -1,0 +1,34 @@
+:root {
+  --nepp-number: #111;
+}
+
+[data-md-color-scheme="slate"] {
+  --nepp-number: #fff;
+}
+
+.lead {
+  font-size: 1.35rem;
+  color: var(--md-default-fg-color--light);
+  margin-top: -0.6rem;
+}
+
+.earth-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2.4rem 0 3rem;
+}
+
+.earth-date span {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.2rem;
+}
+
+.earth-date strong {
+  color: var(--nepp-number);
+  font-size: clamp(2.6rem, 10vw, 5.5rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+}

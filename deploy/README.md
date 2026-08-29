@@ -73,3 +73,36 @@ and replies with no more data than it receives, reducing but not eliminating
 UDP abuse. Source addresses can be spoofed. Keep responses small, do not add
 reflection-amplifying behavior, patch the host, and retain the ability to
 firewall abusive traffic. Authentication is future protocol work.
+
+## Documentation website
+
+The bilingual MkDocs site is served as static files by Caddy. Install its build
+dependencies into the existing virtual environment:
+
+```sh
+sudo /opt/nepp/venv/bin/pip install '/opt/nepp[docs]'
+sudo apt install --yes rsync
+sudo mkdir -p /srv/nepp-site
+```
+
+Build and publish after each update:
+
+```sh
+cd /opt/nepp
+sudo /opt/nepp/venv/bin/mkdocs build --clean --strict
+sudo rsync -a --delete /opt/nepp/site/ /srv/nepp-site/
+```
+
+The Caddy site block is:
+
+```caddyfile
+nepp.kenic.jp {
+    encode zstd gzip
+    root * /srv/nepp-site
+    file_server
+}
+```
+
+Allow inbound TCP ports 80 and 443 for IPv4 and IPv6 in the Lightsail firewall,
+validate `/etc/caddy/Caddyfile`, and reload Caddy. Caddy obtains and renews the
+HTTPS certificate automatically while DNS points to the instance.

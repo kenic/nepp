@@ -62,6 +62,8 @@ spec/           protocol draft
 tests/          unit and interoperability tests
 ios/            SwiftUI client and shared Swift NEPP codec
 deploy/         systemd unit and public-server operations guide
+webdocs/        Japanese and English source for nepp.kenic.jp
+mkdocs.yml      documentation-site configuration
 ```
 
 The initial [iOS client](ios/README.md) receives NEPP while it is in the
