@@ -2,6 +2,8 @@
 
 <p class="lead">One planet. One continuous date.</p>
 
+[日本語版](../index.md){ .md-button .md-button--primary }
+
 <div class="earth-date" aria-label="NEPP Earth Date example">
   <span>now:</span>
   <strong>2026.4320</strong>
@@ -44,5 +46,3 @@ published on [GitHub](https://github.com/kenic/nepp).
 !!! warning "Experimental"
     NEPP Version 1 is experimental. Do not use it as a civil-time source or for
     navigation, financial transactions, or safety-critical synchronization.
-
-[日本語で読む](../index.md){ .md-button }
