@@ -38,11 +38,15 @@ nav:
       - 暦: calendar.md
       - プロトコル: protocol.md
       - iPhoneアプリ: app.md
+      - サポート: support.md
+      - プライバシー: privacy.md
   - English:
       - NEPP: en/index.md
       - Calendar: en/calendar.md
       - Protocol: en/protocol.md
       - iPhone App: en/app.md
+      - Support: en/support.md
+      - Privacy: en/privacy.md
 
 extra:
   alternate:

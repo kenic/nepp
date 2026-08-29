@@ -28,3 +28,6 @@ Earth Date Rateを基準に端末内で連続表示します。表示更新の�
 
 ソースコードとビルド手順は
 [`ios/`](https://github.com/kenic/nepp/tree/main/ios)にあります。
+
+サポートについては[NEPP サポート](support.md)、情報の取り扱いについては
+[プライバシーポリシー](privacy.md)をご覧ください。

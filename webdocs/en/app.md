@@ -29,3 +29,6 @@ Store distribution are the next steps.
 
 Source and build instructions are available in
 [`ios/`](https://github.com/kenic/nepp/tree/main/ios).
+
+See [NEPP Support](support.md) for assistance and the
+[Privacy Policy](privacy.md) for information-handling details.
