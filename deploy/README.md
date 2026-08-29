@@ -85,13 +85,17 @@ sudo apt install --yes rsync
 sudo mkdir -p /srv/nepp-site
 ```
 
-Build and publish after each update:
+Build and publish after each update with the repository-provided command:
 
 ```sh
-cd /opt/nepp
-sudo /opt/nepp/venv/bin/mkdocs build --clean --strict
-sudo rsync -a --delete /opt/nepp/site/ /srv/nepp-site/
+sudo /opt/nepp/deploy/update-site.sh
 ```
+
+The command pulls the latest `main` branch with fast-forward-only semantics,
+updates the documentation dependencies, performs a strict clean build, and
+atomically synchronizes the generated files into `/srv/nepp-site`. It also
+installs `rsync` on its first run if necessary. Caddy does not need a reload
+when only static site files change.
 
 The Caddy site block is:
 
