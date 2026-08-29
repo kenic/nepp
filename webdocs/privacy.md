@@ -62,6 +62,6 @@ NEPPは一般向けの時刻・暦表示ツールであり、子どもから個�
 
 本ポリシーまたはNEPPの情報取扱いに関するお問い合わせ：
 
-[iwa@kenic.jp](mailto:iwa@kenic.jp)
+[support@kenic.jp](mailto:support@kenic.jp)
 
 [English version](en/privacy.md)

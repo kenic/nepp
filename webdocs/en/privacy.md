@@ -65,6 +65,6 @@ are made.
 
 For questions about this policy or NEPP's information practices, contact:
 
-[iwa@kenic.jp](mailto:iwa@kenic.jp)
+[support@kenic.jp](mailto:support@kenic.jp)
 
 [日本語版](../privacy.md)

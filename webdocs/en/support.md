@@ -7,7 +7,7 @@ iPhone app and the public NEPP server.
 
 For bug reports, questions, or feature suggestions, email:
 
-[iwa@kenic.jp](mailto:iwa@kenic.jp)
+[support@kenic.jp](mailto:support@kenic.jp)
 
 When possible, include:
 

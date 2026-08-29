@@ -7,7 +7,7 @@ NEPPをご利用いただきありがとうございます。このページで�
 
 不具合、質問、改善提案は、次のメールアドレスへお送りください。
 
-[iwa@kenic.jp](mailto:iwa@kenic.jp)
+[support@kenic.jp](mailto:support@kenic.jp)
 
 可能であれば、次の情報を添えてください。
 
