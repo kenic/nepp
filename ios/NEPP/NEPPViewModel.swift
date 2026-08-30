@@ -10,6 +10,9 @@ final class NEPPViewModel: ObservableObject {
     }
 
     @Published private(set) var displayEarthDate = "—"
+    @Published private(set) var displayEarthDateMajor = "—"
+    @Published private(set) var displayEarthDateMinor = ""
+    @Published private(set) var displayLocalTime = "—"
     @Published private(set) var status: Status = .idle
     @Published private(set) var isSynchronizing = false
 
@@ -17,7 +20,7 @@ final class NEPPViewModel: ObservableObject {
     private var pollingTask: Task<Void, Never>?
     private var displayTask: Task<Void, Never>?
     private var anchorEarthDate: Double?
-    private var anchorTime: Date?
+    private var anchorUptime: TimeInterval?
     private var rate = 0.0
 
     func start(host: String, port: Int) {
@@ -25,7 +28,7 @@ final class NEPPViewModel: ObservableObject {
         displayTask = Task { [weak self] in
             while !Task.isCancelled {
                 self?.updateDisplay()
-                try? await Task.sleep(for: .seconds(1))
+                try? await Task.sleep(for: .milliseconds(10))
             }
         }
         pollingTask = Task { [weak self] in
@@ -57,7 +60,7 @@ final class NEPPViewModel: ObservableObject {
         do {
             let response = try await client.query(host: host, port: port)
             anchorEarthDate = response.transmit.value
-            anchorTime = Date()
+            anchorUptime = ProcessInfo.processInfo.systemUptime
             rate = response.rate
             updateDisplay()
             status = .synchronized(stratum: response.stratum, at: Date())
@@ -69,8 +72,13 @@ final class NEPPViewModel: ObservableObject {
     }
 
     private func updateDisplay() {
-        guard let anchorEarthDate, let anchorTime else { return }
-        let current = anchorEarthDate + rate * Date().timeIntervalSince(anchorTime)
-        displayEarthDate = String(format: "%.4f", current)
+        guard let anchorEarthDate, let anchorUptime else { return }
+        let elapsed = ProcessInfo.processInfo.systemUptime - anchorUptime
+        let current = anchorEarthDate + rate * elapsed
+        let formatted = String(format: "%.10f", current)
+        displayEarthDate = formatted
+        displayEarthDateMajor = String(formatted.dropLast(6))
+        displayEarthDateMinor = String(formatted.suffix(6))
+        displayLocalTime = Date().formatted(date: .abbreviated, time: .standard)
     }
 }

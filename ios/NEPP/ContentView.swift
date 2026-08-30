@@ -3,8 +3,10 @@ import SwiftUI
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @StateObject private var model = NEPPViewModel()
-    @AppStorage("serverHost") private var serverHost = "127.0.0.1"
+    @AppStorage("serverHost") private var serverHost = "nepp.kenic.jp"
     @AppStorage("serverPort") private var serverPort = 56377
+    @State private var showingDetails = false
+    @State private var showingSettings = false
 
     var body: some View {
         NavigationStack {
@@ -12,31 +14,34 @@ struct ContentView: View {
                 Spacer()
 
                 VStack(spacing: 4) {
-                    Text("today:")
+                    Text("now:")
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                    Text(model.displayEarthDate)
-                        .font(.system(size: 52, weight: .light, design: .rounded))
-                        .monospacedDigit()
-                        .contentTransition(.numericText())
-                        .accessibilityLabel("Earth Date \(model.displayEarthDate)")
+                    HStack(alignment: .firstTextBaseline, spacing: 1) {
+                        Text(model.displayEarthDateMajor)
+                            .font(.system(size: 48, weight: .light, design: .rounded))
+                        Text(model.displayEarthDateMinor)
+                            .font(.system(size: 24, weight: .light, design: .rounded))
+                            .foregroundStyle(.secondary)
+                    }
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.65)
+                    .contentTransition(.numericText())
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Earth Date \(model.displayEarthDate)")
                 }
+                .contentShape(Rectangle())
+                .onTapGesture { withAnimation { showingDetails.toggle() } }
 
                 status
-                Spacer()
-
-                Form {
-                    Section("NEPP server") {
-                        TextField("Host", text: $serverHost)
-                            .textInputAutocapitalization(.never)
-                            .autocorrectionDisabled()
-                        TextField("Port", value: $serverPort,
-                                  format: .number.grouping(.never))
-                            .keyboardType(.numberPad)
-                    }
+                if showingDetails {
+                    Text(model.displayLocalTime)
+                        .font(.callout.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
                 }
-                .frame(maxHeight: 190)
-                .scrollContentBackground(.hidden)
+                Spacer()
             }
             .padding(.horizontal)
             .navigationTitle("NEPP")
@@ -48,19 +53,29 @@ struct ContentView: View {
                 }
                 .disabled(model.isSynchronizing)
                 .accessibilityLabel("Synchronize now")
+
+                Button {
+                    showingSettings = true
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .accessibilityLabel("Settings")
             }
+        }
+        .sheet(isPresented: $showingSettings) {
+            SettingsView(host: $serverHost, port: $serverPort)
         }
         .onAppear { model.start(host: serverHost, port: serverPort) }
         .onDisappear { model.stop() }
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 model.start(host: serverHost, port: serverPort)
             } else {
                 model.stop()
             }
         }
-        .onChange(of: serverHost) { _ in model.start(host: serverHost, port: serverPort) }
-        .onChange(of: serverPort) { _ in model.start(host: serverHost, port: serverPort) }
+        .onChange(of: serverHost) { model.start(host: serverHost, port: serverPort) }
+        .onChange(of: serverPort) { model.start(host: serverHost, port: serverPort) }
     }
 
     @ViewBuilder
@@ -86,5 +101,58 @@ struct ContentView: View {
                 .foregroundStyle(.orange)
                 .multilineTextAlignment(.center)
         }
+    }
+}
+
+private struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Binding var host: String
+    @Binding var port: Int
+    @FocusState private var focusedField: Field?
+
+    private enum Field { case host, port }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("NEPP server") {
+                    TextField("Host", text: $host)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .focused($focusedField, equals: .host)
+                    TextField("Port", value: $port, format: .number.grouping(.never))
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: .port)
+                }
+
+                Section("About") {
+                    Link(destination: URL(string: "https://nepp.kenic.jp/en/")!) {
+                        Label("NEPP Website", systemImage: "safari")
+                    }
+                    LabeledContent("Version", value: appVersion)
+                    LabeledContent("Build", value: appBuild)
+                }
+            }
+            .scrollDismissesKeyboard(.interactively)
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") { dismiss() }
+                }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { focusedField = nil }
+                }
+            }
+        }
+    }
+
+    private var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
+    }
+
+    private var appBuild: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—"
     }
 }
