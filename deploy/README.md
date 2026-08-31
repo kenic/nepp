@@ -1,5 +1,12 @@
 # Deploying the public NEPP server
 
+**Migration warning:** this checkout serves draft-03 V2 only. Existing V1 beta
+apps and `nepp-client` will time out. Do not apply the restart/update commands to
+the current public V1 service until the client upgrade and cutover are planned.
+First run an isolated local test with `nepp-server --host 127.0.0.1 --port 56378`
+and `python -m nepp.probe 127.0.0.1 --port 56378`. No production deployment is
+implied by these source changes. Keep the old release available for rollback.
+
 This targets a small Ubuntu Lightsail instance with public IPv4 and IPv6. The
 recommended minimum is 1 GB RAM because installing and importing Astropy can be
 memory intensive.
@@ -43,7 +50,7 @@ and memory restrictions. To override defaults, copy `nepp.env.example` to
 From another machine with NEPP installed:
 
 ```sh
-nepp-client nepp.example.org --port 56377
+python -m nepp.probe nepp.example.org --port 56377
 ```
 
 Inspect logs:
@@ -68,7 +75,8 @@ validity.
 
 ## Security notes
 
-NEPP Version 1 is unauthenticated. The server applies a per-source token bucket
+NEPP Version 2 is unauthenticated; its echoed random token is not authentication.
+The server applies per-source and aggregate token buckets with bounded source state
 and replies with no more data than it receives, reducing but not eliminating
 UDP abuse. Source addresses can be spoofed. Keep responses small, do not add
 reflection-amplifying behavior, patch the host, and retain the ability to

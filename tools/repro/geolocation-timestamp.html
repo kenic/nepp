@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geolocation timestamp epoch reproduction</title>
+<h1>Geolocation timestamp epoch reproduction</h1>
+<p>Open on localhost or HTTPS in Safari, click the button and allow location.
+Repeat in another browser if available. Add the exact macOS and Safari versions
+manually when reporting; the user agent may not reflect the installed OS version.</p>
+<p>This standalone page uses no NEPP code, libraries or network requests.
+It never reads, displays, stores or sends coordinates. The browser/OS still
+uses its location service after permission is granted.</p>
+<button id="run">Request location timestamp</button>
+<p id="status" role="status">Not started.</p>
+<textarea id="output" rows="23" cols="90" readonly aria-label="Diagnostic report"></textarea>
+<script>
+'use strict';
+const button = document.getElementById('run');
+const status = document.getElementById('status');
+const output = document.getElementById('output');
+const EPOCH_DIFFERENCE_MS = Date.UTC(2001, 0, 1) - Date.UTC(1970, 0, 1);
+let generation = 0;
+const iso = value => Number.isFinite(value) && Math.abs(value) <= 8640000000000000
+  ? new Date(value).toISOString() : null;
+button.onclick = () => {
+  const id = ++generation;
+  button.disabled = true;
+  const started = Date.now();
+  const monotonicStart = performance.now();
+  const report = {
+    user_agent: navigator.userAgent,
+    secure_context: window.isSecureContext,
+    options: {enableHighAccuracy: false, maximumAge: 0, timeout: 15000},
+    request_date_now_ms: started,
+    request_date_now_iso: iso(started),
+    expected: 'position.timestamp is milliseconds since 1970-01-01T00:00:00Z',
+    note: 'No coordinates read. Epoch correction below is diagnostic only, not applied.'
+  };
+  let watchdog;
+  const finish = message => {
+    if (generation !== id) return;
+    ++generation;
+    clearTimeout(watchdog);
+    status.textContent = message;
+    button.disabled = false;
+    output.value = JSON.stringify(report, null, 2);
+  };
+  if (!navigator.geolocation) {finish('Geolocation is not available.'); return;}
+  status.textContent = 'Waiting for permission / location…';
+  output.value = JSON.stringify(report, null, 2);
+  watchdog = setTimeout(() => finish('No callback after 30 seconds (page watchdog, not a browser error).'), 30000);
+  try {
+    navigator.geolocation.getCurrentPosition(position => {
+      if (generation !== id) return;
+      const received = Date.now();
+      const timestamp = position.timestamp;
+      const elapsed = performance.now() - monotonicStart;
+      report.callback_date_now_ms = received;
+      report.callback_date_now_iso = iso(received);
+      report.elapsed_monotonic_ms = elapsed;
+      report.wall_minus_monotonic_elapsed_ms = received - started - elapsed;
+      report.position_timestamp_type = typeof timestamp;
+      report.position_timestamp_ms = Number.isFinite(timestamp) ? timestamp : null;
+      report.position_timestamp_iso_as_unix = iso(timestamp);
+      if (Number.isFinite(timestamp)) {
+        report.age_seconds = (received - timestamp) / 1000;
+        report.epoch_difference_seconds = EPOCH_DIFFERENCE_MS / 1000;
+        report.age_if_2001_epoch_seconds = (received - timestamp - EPOCH_DIFFERENCE_MS) / 1000;
+        report.timestamp_if_2001_epoch_iso = iso(timestamp + EPOCH_DIFFERENCE_MS);
+      }
+      finish('Success callback received. Copy the report below; it contains timestamps, not coordinates.');
+    }, error => {
+      if (generation !== id) return;
+      report.geolocation_error_code = error.code;
+      finish('Browser error: ' + ({1:'permission denied',2:'position unavailable',3:'timeout'}[error.code] || 'unknown'));
+    }, report.options);
+  } catch (error) {
+    report.exception_name = error.name;
+    finish('The location request threw an exception.');
+  }
+};
+</script>
+</html>

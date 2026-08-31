@@ -1,0 +1,6 @@
+{
+  "id": "/web/", "name": "NEPP — Earth Date & Solar Phase", "short_name": "NEPP",
+  "start_url": "/web/", "scope": "/web/", "display": "standalone",
+  "background_color": "#10191c", "theme_color": "#10191c",
+  "icons": [{"src": "icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any"}]
+}

@@ -1,0 +1,2 @@
+"NSLocationWhenInUseUsageDescription" = "現在地の太陽位相を表示するために位置情報を使います。位置情報は端末外へ送信しません。許可しなくてもEarth Dateは利用できます。";
+"NSLocalNetworkUsageDescription" = "Earth Dateと太陽位相を受信するため、設定したローカルサーバーに接続します。";

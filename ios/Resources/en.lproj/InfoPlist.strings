@@ -1,0 +1,2 @@
+"NSLocationWhenInUseUsageDescription" = "Your location is used to display local solar phase. It never leaves your device. You can decline and still use Earth Date.";
+"NSLocalNetworkUsageDescription" = "NEPP connects to your configured local server to receive Earth Date and solar phase.";

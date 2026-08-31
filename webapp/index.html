@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#10191c">
+  <meta name="description" content="One Earth. A shared now. Earth Date and your local solar phase, powered by NEPP.">
+  <meta property="og:title" content="NEPP — One Earth. A shared now.">
+  <meta property="og:description" content="Earth Date and the Sun's daily cycle, in your browser.">
+  <meta property="og:image" content="https://nepp.kenic.jp/web/icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <title>NEPP — Earth Date & Solar Phase</title>
+</head>
+<body>
+  <header><a class="brand" href="./">NEPP<span>EARTH POSITION</span></a><nav><button id="language">日本語</button><button id="settingsButton" aria-label="Settings">⚙</button></nav></header>
+  <main>
+    <p class="eyebrow" data-i18n="tagline">ONE EARTH. A SHARED NOW.</p>
+    <button class="coordinate earth" id="earthButton" aria-haspopup="dialog">
+      <span class="label" data-i18n="earth">EARTH DATE</span><span id="ed" class="number"><span id="edMajor">—</span><span id="edMinor" class="minorDigits"></span></span><span class="hint" data-i18n="now">now, on our planet</span>
+    </button>
+    <div class="divider"></div>
+    <button class="coordinate solar" id="solarButton" aria-haspopup="dialog">
+      <span class="label" data-i18n="solar">SOLAR PHASE</span><span id="sp" class="number">—</span><span id="place" class="hint">Greenwich</span>
+    </button>
+    <div class="orbit" aria-hidden="true"><span id="sun"></span></div>
+    <div class="scale"><span data-i18n="midnight">0 · Midnight</span><span data-i18n="noon">0.5 · Solar noon</span><span>1</span></div>
+    <p id="status" role="status">Connecting…</p>
+    <div class="actions"><button id="refresh" data-i18n="refresh">Refresh</button><button id="detailsButton" data-i18n="details">Details ↗</button></div>
+  </main>
+  <footer><span data-i18n="experimental">EXPERIMENTAL · WEB 0.0.2</span><a id="aboutLink" href="/en/" data-i18n="about">About NEPP ↗</a></footer>
+  <dialog id="settings"><form method="dialog"><div class="dialogHead"><h2 data-i18n="settings">Settings</h2><button data-i18n="done">Done</button></div></form>
+    <label class="toggle"><span data-i18n="location">Use current location</span><input type="checkbox" id="location"></label>
+    <p class="hint" data-i18n="private">Your coordinates stay on this device. ED does not need location.</p>
+    <label for="longitude" data-i18n="longitude">Manual longitude (east positive)</label>
+    <div class="inputRow"><input id="longitude" type="number" min="-180" max="180" step="any" placeholder="139.7"><button id="applyLongitude" data-i18n="apply">Apply</button></div>
+    <button id="greenwich" data-i18n="greenwich">Use Greenwich</button><p id="locationStatus" role="status"></p>
+    <button id="retryLocation" data-i18n="retryLocation">Retry location</button>
+    <p class="hint" data-i18n="install">On iPhone: Share → Add to Home Screen. A network connection is required.</p>
+    <p><a id="privacyLink" href="/en/privacy/" data-i18n="privacy">Privacy</a> · <a id="supportLink" href="/en/support/" data-i18n="support">Support</a></p>
+    <p class="hint">NEPP Web 0.0.2 · draft-03 V2</p>
+  </dialog>
+  <dialog id="details"><form method="dialog"><div class="dialogHead"><h2 data-i18n="details">Details ↗</h2><button data-i18n="done">Done</button></div></form><div id="detailContent"></div><p class="hint" data-i18n="accuracy">Digits are not an accuracy guarantee. HTTP delay is estimated assuming a symmetric path; browser timing and network asymmetry are unassessed.</p></dialog>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

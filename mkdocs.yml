@@ -53,6 +53,8 @@ nav:
       - Support: en/support.md
       - Privacy: en/privacy.md
   - Draft archive:
+      - "-03 English (proposal)": drafts/draft-iwata-nepp-03.md
+      - "-03 日本語（参考・提案）": drafts/draft-iwata-nepp-03-jp.md
       - "-02 English (proposal)": drafts/draft-iwata-nepp-02.md
       - "-02 日本語（参考・提案）": drafts/draft-iwata-nepp-02-jp.md
       - "-01 English": drafts/draft-iwata-nepp-01.md

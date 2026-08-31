@@ -1,7 +1,7 @@
 # Privacy Policy
 
 **Effective date: August 29, 2026**  
-**Last updated: August 29, 2026**
+**Last updated: August 31, 2026**
 
 This Privacy Policy explains how Kenichi Iwata ("the Developer") handles
 information in the NEPP iOS app, the public NEPP server, and the related
@@ -12,13 +12,22 @@ website.
 The NEPP app does not collect:
 
 - Names, email addresses, telephone numbers, or other contact information
-- Precise or approximate location
 - Contacts, photos, health information, or financial information
 - Advertising identifiers, device identifiers, or purchase history
 - Analytics derived from in-app activity
 
 NEPP has no user accounts, advertising, in-app purchases, or third-party
 advertising or analytics SDKs.
+
+## Optional on-device location (0.0.2)
+
+The 0.0.2 client can use location with your When In Use permission to calculate
+local solar phase. This processing takes place on your device. Coordinates are
+not sent to the NEPP server, logged by the app, or saved persistently by the app.
+You can decline permission, stop location use in Settings, or enter a manual
+reference longitude. ED remains available without location permission.
+Location updates stop when the app leaves the foreground. Version 0.0.1 does
+not use location. This describes the new client; distribution is a separate step.
 
 ## Network communication
 
@@ -38,6 +47,13 @@ A third-party NEPP server selected by a user is governed by that operator's own
 privacy practices.
 
 ## Website
+
+The experimental Web app at `/web/` obtains ED and Greenwich solar phase over
+HTTPS. Optional location processing stays in the browser: coordinates are not
+included in API requests or persisted, including manually entered longitude.
+Only language and location-mode preferences are stored locally. Requests stop
+when the page is hidden, and no analytics or service worker is used. A random
+per-request nonce correlates responses; it is not a persistent user identifier.
 
 The related website may process IP addresses and other standard network
 information through its hosting infrastructure as necessary to deliver pages.

@@ -1,6 +1,7 @@
 """Publish original drafts separately from the implementation snapshot."""
 
 from pathlib import Path
+import shutil
 
 from mkdocs.structure.files import File
 
@@ -39,3 +40,10 @@ def on_files(files, config):
         abs_src_path=str(snapshot.resolve())
     ))
     return files
+
+
+def on_post_build(config):
+    """Keep the standalone app out of Markdown rendering and inside site sync."""
+    root = Path(config.config_file_path).parent
+    shutil.copytree(root / 'webapp', Path(config.site_dir) / 'web', dirs_exist_ok=True,
+                    ignore=shutil.ignore_patterns('*.test.mjs', 'README.md'))

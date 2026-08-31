@@ -1,0 +1,20 @@
+nepp.kenic.jp {
+    encode zstd gzip
+    handle /api/v2/state {
+        reverse_proxy 127.0.0.1:8080
+    }
+    handle /web/* {
+        root * /srv/nepp-site
+        header Cache-Control "no-cache"
+        header X-Content-Type-Options "nosniff"
+        header Referrer-Policy "no-referrer"
+        header Permissions-Policy "geolocation=(self)"
+        header Content-Security-Policy "default-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'; frame-ancestors 'none'"
+        file_server
+    }
+    redir /web /web/ 308
+    handle {
+        root * /srv/nepp-site
+        file_server
+    }
+}
