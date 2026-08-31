@@ -53,8 +53,10 @@ round_trip = (E4 - E1) - (E3 - E2)
 ```
 
 完全な実装スナップショットは
-[`draft-iwata-nepp-01`](https://github.com/kenic/nepp/blob/main/spec/draft-iwata-nepp-01.md)
+[Version 1実装スナップショット](drafts/implementation-snapshot-v1.md)
 を参照してください。
+
+[ドラフト・過去版の一覧](drafts/index.md)から原稿もダウンロードできます。
 
 ## セキュリティ
 

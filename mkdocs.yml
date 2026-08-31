@@ -8,6 +8,9 @@ repo_name: kenic/nepp
 repo_url: https://github.com/kenic/nepp
 edit_uri: edit/main/webdocs/
 
+hooks:
+  - deploy/docs_hooks.py
+
 theme:
   name: material
   language: ja
@@ -37,6 +40,7 @@ nav:
       - NEPP: index.md
       - 暦: calendar.md
       - プロトコル: protocol.md
+      - ドラフト・過去版: drafts/index.md
       - iPhoneアプリ: app.md
       - サポート: support.md
       - プライバシー: privacy.md
@@ -44,9 +48,16 @@ nav:
       - NEPP: en/index.md
       - Calendar: en/calendar.md
       - Protocol: en/protocol.md
+      - Drafts and revisions: en/drafts.md
       - iPhone App: en/app.md
       - Support: en/support.md
       - Privacy: en/privacy.md
+  - Draft archive:
+      - "-01 English": drafts/draft-iwata-nepp-01.md
+      - "-01 日本語": drafts/draft-iwata-nepp-01-jp.md
+      - "-00 English": drafts/draft-iwata-nepp-00.md
+      - "-00 日本語": drafts/draft-iwata-nepp-00-jp.md
+      - Implementation snapshot (V1): drafts/implementation-snapshot-v1.md
 
 extra:
   alternate:

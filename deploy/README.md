@@ -97,6 +97,28 @@ atomically synchronizes the generated files into `/srv/nepp-site`. It also
 installs `rsync` on its first run if necessary. Caddy does not need a reload
 when only static site files change.
 
+### Versioned draft archive
+
+The archive lives at `/drafts/` (Japanese) and `/en/drafts/` (English).
+`deploy/docs_hooks.py` includes originals from repository-root `draft-iwata-nepp-NN.md`
+and `draft-iwata-nepp-NN-jp.md`
+at build time, without keeping a second editable copy under `webdocs/`.
+Each original is published as:
+
+- `/drafts/draft-iwata-nepp-NN/` — rendered HTML
+- `/drafts/source/draft-iwata-nepp-NN.txt` — byte-identical Markdown source
+
+Japanese editions use these paths with `-jp` appended to the draft name.
+Rendered pages add language and source links; downloaded originals are unchanged.
+The shorter `spec/draft-iwata-nepp-01.md` is kept separate at
+`/drafts/implementation-snapshot-v1/`.
+
+Preserve published originals. Add a new numbered source for revisions, and
+update both archive indexes and the archive navigation in `mkdocs.yml`.
+Clearly identify working drafts versus IETF submissions, and distinguish the
+latest draft from the protocol version supported by deployed implementations.
+Do not list an unavailable historical revision as a downloadable document.
+
 The Caddy site block is:
 
 ```caddyfile
