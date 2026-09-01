@@ -75,6 +75,9 @@ extra:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/earth-date.js
+
 markdown_extensions:
   - admonition
   - attr_list

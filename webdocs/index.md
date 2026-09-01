@@ -4,7 +4,7 @@
 
 <div class="earth-date" aria-label="NEPP Earth Date example">
   <span>now:</span>
-  <strong>2026.4320</strong>
+  <strong data-live-earth-date>2026.4320</strong>
 </div>
 
 **Network Earth Position Protocol（NEPP）**は、地球の一年における位置を

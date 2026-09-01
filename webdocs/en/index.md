@@ -6,7 +6,7 @@
 
 <div class="earth-date" aria-label="NEPP Earth Date example">
   <span>now:</span>
-  <strong>2026.4320</strong>
+  <strong data-live-earth-date>2026.4320</strong>
 </div>
 
 The **Network Earth Position Protocol (NEPP)** is an experimental calendar and
