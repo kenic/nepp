@@ -23,6 +23,11 @@ NEPPのEarth Dateは一つの数で表します。
 
 ## すでに動いています
 
+アプリをインストールせず、ブラウザだけでEarth Dateと現在地のSolar Phaseを
+確認できます。位置情報は端末内でのみ使用され、NEPPサーバーには送信されません。
+
+[NEPP Webを開く](https://nepp.kenic.jp/web/){ .md-button .md-button--primary }
+
 公開NEPPサーバーは次のアドレスで稼働しています。
 
 ```text

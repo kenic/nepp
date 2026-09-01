@@ -27,6 +27,12 @@ advances as the apparent solar longitude completes one revolution.
 
 ## It is running now
 
+Use NEPP Web to view Earth Date and your local Solar Phase directly in a
+browser—no app installation required. Your location remains on your device and
+is not sent to the NEPP server.
+
+[Open NEPP Web](https://nepp.kenic.jp/web/){ .md-button .md-button--primary }
+
 The public NEPP server is available at:
 
 ```text
