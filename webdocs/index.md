@@ -2,6 +2,10 @@
 
 <p class="lead">ひとつの惑星。ひとつの連続した日付。</p>
 
+<div class="language-switch">
+  <a href="/en/" class="md-button md-button--primary" lang="en">English</a>
+</div>
+
 <div class="earth-date" aria-label="NEPP Earth Date example">
   <span>now:</span>
   <strong data-live-earth-date>2026.4320</strong>
@@ -47,5 +51,3 @@ Pythonの参照クライアントとiPhoneアプリから、同じEarth Dateを�
 !!! warning "Experimental"
     NEPP Version 1は実験的なプロトコルです。法定時刻、航法、金融取引、
     安全性が重要な同期には使用できません。
-
-[Read in English](en/index.md){ .md-button }

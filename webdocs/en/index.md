@@ -2,7 +2,9 @@
 
 <p class="lead">One planet. One continuous date.</p>
 
-[日本語版](../index.md){ .md-button .md-button--primary }
+<div class="language-switch">
+  <a href="/" class="md-button md-button--primary" lang="ja">日本語版</a>
+</div>
 
 <div class="earth-date" aria-label="NEPP Earth Date example">
   <span>now:</span>
